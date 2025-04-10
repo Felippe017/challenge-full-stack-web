@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:15.5-alpine
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=challengeweb
+    ports:
+      - "5432:5432"
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://admin:pass@db:5432/challengeweb?schema=public
+    expose:
+      - 3000:3000
+
+
+volumes:
+  pgdata:
