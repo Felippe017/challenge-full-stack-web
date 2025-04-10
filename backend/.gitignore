@@ -3,4 +3,4 @@ node_modules
 .env
 
 # Prima files
-src/generated/prisma/
+generated/prisma/
