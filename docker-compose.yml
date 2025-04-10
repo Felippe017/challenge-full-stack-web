@@ -19,7 +19,7 @@ services:
       - db
     environment:
       - DATABASE_URL=postgresql://admin:pass@db:5432/challengeweb?schema=public
-    expose:
+    ports:
       - 3000:3000
 
 
