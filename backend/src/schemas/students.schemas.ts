@@ -19,5 +19,12 @@ export const updateStudentSchema = z.object({
   }),
 });
 
+export const studentParamsSchema = z.object({
+  params: z.object({
+    studentId: z.string({ required_error: 'Student ID is required' }),
+  }),
+});
+
 export type CreateStudentsInput = z.infer<typeof createStudentsSchema.shape.body>;
 export type UpdateStudentInput = z.infer<typeof updateStudentSchema>;
+export type StudentParamsInput = z.infer<typeof studentParamsSchema.shape.params>;
