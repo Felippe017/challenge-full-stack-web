@@ -13,4 +13,5 @@ model Students {
   name         String? @db.VarChar(255)
   email        String  @db.VarChar(255)
   registration Int     @unique
+  cpf          String  @unique @db.Char(15)
 }
