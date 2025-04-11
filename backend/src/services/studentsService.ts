@@ -10,3 +10,9 @@ export const createStudent = async ({ name, email, registration, cpf }: CreateSt
     })
     return student
 };
+
+
+export const getStudents = async () => {
+    const student = await prisma.students.findMany()
+    return student
+};

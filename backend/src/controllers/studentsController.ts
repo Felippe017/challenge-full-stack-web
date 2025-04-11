@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createStudent } from '../services/studentsService';
+import { createStudent, getStudents } from '../services/studentsService';
 import { CreateStudentsInput } from '../schemas/students.schemas';
 
 export async function createStudentHandler(
@@ -14,4 +14,9 @@ export async function createStudentHandler(
     console.error(e.message);
     res.status(400).send(e.message);
   }
+}
+
+export async function getStudentHandler(_req: Request, res: Response) {
+  const students = await getStudents();
+  res.status(200).json(students);
 }
