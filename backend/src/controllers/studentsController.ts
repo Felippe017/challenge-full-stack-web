@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { createStudent, getStudents } from '../services/studentsService';
-import { CreateStudentsInput } from '../schemas/students.schemas';
+import { createStudent, getStudents, updateStudent } from '../services/studentsService';
+import { CreateStudentsInput, UpdateStudentInput } from '../schemas/students.schemas';
 
 export async function createStudentHandler(
   req: Request<{}, {}, CreateStudentsInput>,
@@ -19,4 +19,22 @@ export async function createStudentHandler(
 export async function getStudentHandler(_req: Request, res: Response) {
   const students = await getStudents();
   res.status(200).json(students);
+}
+
+export async function updateStudentHandler(
+  req: Request<UpdateStudentInput['params'], {}, UpdateStudentInput['body']>,
+  res: Response
+) {
+  try {
+    const { name, email } = req.body;
+    const { studentId } = req.params;
+    const student = await updateStudent({
+      body: { email, name },
+      params: { studentId }
+  });
+    res.status(200).json({ "message": "Aluno editado com sucesso.", student });
+  } catch (e: any) {
+    console.error(e.message);
+    res.status(400).send(e.message);
+  }
 }
