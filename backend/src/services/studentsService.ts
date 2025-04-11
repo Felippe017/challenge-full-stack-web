@@ -1,12 +1,16 @@
 import { prisma } from "../lib/prisma";
-import { CreateStudentsInput, UpdateStudentInput, StudentParamsInput } from "../schemas/students.schemas";
+import {
+	CreateStudentsInput,
+	UpdateStudentInput,
+	StudentParamsInput
+} from "../schemas/students.schemas";
 
 
 export const createStudent = async ({ name, email, registration, cpf }: CreateStudentsInput) => {
 	const student = await prisma.students.create({
-			data: {
-					name, email, registration, cpf
-			}
+		data: {
+			name, email, registration, cpf
+		}
 	})
 	return student
 };
@@ -20,7 +24,7 @@ export const updateStudent = async ({body, params}: UpdateStudentInput) => {
 	const { name, email } = body
 	const { studentId } = params
 
-	const student = await prisma.students.findFirst({
+	const student = await prisma.students.findUnique({
 		where: { id: Number(studentId) },
 	})
 
@@ -36,7 +40,7 @@ export const updateStudent = async ({body, params}: UpdateStudentInput) => {
 };
 
 export const deleteStudent = async ({ studentId }: StudentParamsInput) => {
-	const student = await prisma.students.findFirst({
+	const student = await prisma.students.findUnique({
 		where: { id: Number(studentId) },
 	})
 
@@ -51,7 +55,7 @@ export const deleteStudent = async ({ studentId }: StudentParamsInput) => {
 };
 
 export const getStudentById = async ({ studentId }: StudentParamsInput) => {
-	const student = await prisma.students.findFirst({
+	const student = await prisma.students.findUnique({
 		where: { id: Number(studentId) },
 	})
 	return student
