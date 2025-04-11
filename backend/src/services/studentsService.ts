@@ -49,3 +49,10 @@ export const deleteStudent = async ({ studentId }: StudentParamsInput) => {
 
 	return studentDeleted
 };
+
+export const getStudentById = async ({ studentId }: StudentParamsInput) => {
+	const student = await prisma.students.findFirst({
+		where: { id: Number(studentId) },
+	})
+	return student
+}

@@ -1,6 +1,16 @@
 import { Request, Response } from 'express';
-import { createStudent, getStudents, updateStudent, deleteStudent } from '../services/studentsService';
-import { CreateStudentsInput, UpdateStudentInput, StudentParamsInput } from '../schemas/students.schemas';
+import {
+  createStudent,
+  getStudents,
+  updateStudent,
+  deleteStudent,
+  getStudentById
+} from '../services/studentsService';
+import {
+  CreateStudentsInput,
+  UpdateStudentInput,
+  StudentParamsInput
+} from '../schemas/students.schemas';
 
 export async function createStudentHandler(
   req: Request<{}, {}, CreateStudentsInput>,
@@ -47,6 +57,20 @@ export async function deleteStudentHandler(
     const { studentId } = req.params
     await deleteStudent({ studentId });
     res.status(204).json({ "message": "Aluno deletado com sucesso" });
+  } catch (e: any) {
+    console.error(e.message);
+    res.status(400).send(e.message);
+  }
+}
+
+export async function getStudentByIdHandler(
+  req: Request<StudentParamsInput>,
+  res: Response
+) {
+  try {
+    const { studentId } = req.params
+    const student = await getStudentById({ studentId });
+    res.status(200).json({"message": "Dados do aluno recuperados com sucesso.", student});
   } catch (e: any) {
     console.error(e.message);
     res.status(400).send(e.message);
