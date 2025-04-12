@@ -24,13 +24,31 @@
       </thead>
       <tbody>
         <tr
-          v-for="item in desserts"
+          v-for="item in allStudents"
           :key="item.registration"
         >
           <td>{{ item.registration }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.cpf }}</td>
-          <td>{{ item.actions }}</td>
+          <td>
+            <v-btn
+              class="me-2"
+              color="primary"
+              size="x-small"
+              variant="outlined"
+              @click="editStudent(item)"
+            >
+              Editar
+            </v-btn>
+            <v-btn
+              color="error"
+              size="x-small"
+              variant="outlined"
+              @click="deleteStudent(item)"
+            >
+              Excluir
+            </v-btn>
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -39,29 +57,30 @@
 
 
 <script lang="ts" setup>
-  const desserts = [
-    {
-      name: 'Frozen Yogurt',
-      calories: 159,
-    },
-    {
-      name: 'Ice cream sandwich',
-      calories: 237,
-    },
-    {
-      name: 'Eclair',
-      calories: 262,
-    },
-    {
-      name: 'Cupcake',
-      calories: 305,
-    },
-  ]
+  import { onMounted, ref } from 'vue'
+  import { getStudents } from '@/services/studentService'
+  import { Student } from '@/types/student'
+
+  const allStudents = ref<Student[]>()
+
+  onMounted(async () => {
+    const students = await getStudents()
+    allStudents.value = students
+  })
+
+  const editStudent = student => {
+    console.log('Editar:', student)
+  }
+
+  const deleteStudent = student => {
+    console.log('Excluir:', student)
+  }
+
 </script>
 
 
 <style lang="sass">
-    h1
-        text-align: center
-        padding-bottom: 30px
+  h1
+    text-align: center
+    padding-bottom: 30px
 </style>
