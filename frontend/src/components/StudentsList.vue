@@ -59,7 +59,7 @@
 <script lang="ts" setup>
   import { onMounted, ref } from 'vue'
   import { getStudents } from '@/services/studentService'
-  import { Student } from '@/types/student'
+  import type { Student } from '@/types/student'
 
   const allStudents = ref<Student[]>()
 
@@ -68,11 +68,11 @@
     allStudents.value = students
   })
 
-  const editStudent = student => {
+  const editStudent = (student: Student) => {
     console.log('Editar:', student)
   }
 
-  const deleteStudent = student => {
+  const deleteStudent = (student: Student) => {
     console.log('Excluir:', student)
   }
 
