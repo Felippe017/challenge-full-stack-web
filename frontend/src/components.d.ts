@@ -13,5 +13,6 @@ declare module 'vue' {
     NavigatorDrawer: typeof import('./components/NavigatorDrawer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StudentsList: typeof import('./components/StudentsList.vue')['default']
   }
 }
