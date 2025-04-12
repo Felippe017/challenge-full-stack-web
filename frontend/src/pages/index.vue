@@ -8,7 +8,6 @@
     <NavigatorDrawer @change-view="currentView = $event">
       <StudentsList
         v-if="currentView === 'list'"
-        class="view-container"
       />
     </NavigatorDrawer>
 
@@ -17,7 +16,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue'
-  const currentView = ref('list')
+  const currentView = ref<'list' | 'form'>('list')
 </script>
 
 <style lang="sass">
@@ -26,16 +25,18 @@
   display: flex
   flex-direction: column
   align-items: flex-start
-  padding: 0 100px
+  padding: 0 6.25rem
 
 
 .image-education
-  height: 95px
-  width: 95px
-  margin-left: 75px
-  margin-bottom: 20px
+  height: 6rem
+  width: 6rem
+  margin-left: 4.7rem
+  margin-bottom: 1.25rem
 
-.view-container
-  margin-left: 300px
-  width: 100%
+.v-main
+  flex: none
+
+.v-layout
+  display: unset
 </style>
