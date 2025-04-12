@@ -1,7 +1,5 @@
 <template>
-  <v-app>
-    <router-view />
-  </v-app>
+  <NavigatorDrawer />
 </template>
 
 <script lang="ts" setup>
