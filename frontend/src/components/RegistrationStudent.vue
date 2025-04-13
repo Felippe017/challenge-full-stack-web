@@ -113,12 +113,18 @@
 
   const v$ = useVuelidate(rules, state)
 
+  const emit = defineEmits<{
+    (e: 'change-view', view: 'list' | 'form'): void
+  }>()
+
   const clear = () => {
     v$.value.$reset()
 
     for (const [key, value] of Object.entries(initialState)) {
       state[key as keyof typeof state] = value
     }
+
+    emit('change-view', 'list')
   }
 
   const submit = async () => {
