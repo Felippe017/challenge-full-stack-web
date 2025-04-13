@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="main-card-drawer">
     <v-layout>
       <v-navigation-drawer
         location="left"
@@ -17,10 +17,18 @@
         <v-divider />
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-account-group-outline" title="Alunos" value="students" />
+          <v-list-item
+            prepend-icon="mdi-account-group-outline"
+            title="Alunos"
+            value="students"
+            @click="$emit('change-view', 'list')"
+          />
         </v-list>
       </v-navigation-drawer>
-      <v-main style="height: 500px" />
+      <v-main />
+      <v-content>
+        <slot />
+      </v-content>
     </v-layout>
   </v-card>
 </template>
@@ -32,4 +40,7 @@
   justify-content: center
   align-items: center
   text-align: center
+
+.main-card-drawer
+  width: 100%
 </style>

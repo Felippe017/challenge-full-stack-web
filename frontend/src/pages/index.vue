@@ -1,16 +1,26 @@
 <template>
   <v-main class="main-content">
     <v-img
-      alt="Logo Mais A Educação"
+      alt="Logo A+ Educação"
       class="image-education"
       src="https://maisaedu.com.br/hubfs/site-grupo-a/logo-mais-a-educacao.svg"
     />
-    <NavigatorDrawer />
+    <NavigatorDrawer @change-view="currentView = $event">
+      <StudentsList
+        v-if="currentView === 'list'"
+        @change-view="currentView = $event"
+      />
+      <RegistrationStudent
+        v-if="currentView === 'form'"
+      />
+    </NavigatorDrawer>
+
   </v-main>
 </template>
 
 <script lang="ts" setup>
-  //
+  import { ref } from 'vue'
+  const currentView = ref<'list' | 'form'>('list')
 </script>
 
 <style lang="sass">
@@ -19,11 +29,18 @@
   display: flex
   flex-direction: column
   align-items: flex-start
-  padding: 50px
+  padding: 0 6.25rem
+
 
 .image-education
-  height: 95px
-  width: 95px
-  margin-left: 75px
-  margin-bottom: 20px
+  height: 6rem
+  width: 6rem
+  margin-left: 4.7rem
+  margin-bottom: 1.25rem
+
+.v-main
+  flex: none
+
+.v-layout
+  display: unset
 </style>
