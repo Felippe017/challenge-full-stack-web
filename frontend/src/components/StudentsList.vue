@@ -1,6 +1,16 @@
 <template>
   <v-main>
     <h1 class="text-h4">Consulta de alunos</h1>
+    <div class="button-and-input">
+      <v-text-field
+        density="compact"
+        label="Digite sua busca"
+        style="max-width: 60%;"
+        variant="solo-filled"
+      />
+      <v-btn class="search-button" size="large" variant="tonal">Pesquisar</v-btn>
+      <v-btn size="large" variant="tonal">Cadastrar Aluno</v-btn>
+    </div>
 
     <v-table
       fixed-header
@@ -82,5 +92,12 @@
 <style lang="sass">
   h1
     text-align: center
-    padding-bottom: 30px
+    padding-bottom: 1.8rem
+
+  .button-and-input
+    display: flex
+    padding: 0 3rem
+
+  .search-button
+    margin-right: 5rem
 </style>
