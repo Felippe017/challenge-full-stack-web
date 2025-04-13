@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <v-main height="45rem">
     <h1 class="text-h4">Consulta de alunos</h1>
     <div class="button-and-input">
       <v-text-field
@@ -9,12 +9,11 @@
         variant="solo-filled"
       />
       <v-btn class="search-button" size="large" variant="tonal">Pesquisar</v-btn>
-      <v-btn size="large" variant="tonal">Cadastrar Aluno</v-btn>
+      <v-btn size="large" variant="tonal" @click="emit('change-view', 'form')">Cadastrar Aluno</v-btn>
     </div>
 
     <v-table
       fixed-header
-      height="40rem"
     >
       <thead>
         <tr>
@@ -72,6 +71,10 @@
   import type { Student } from '@/types/student'
 
   const allStudents = ref<Student[]>()
+
+  const emit = defineEmits<{
+    (e: 'change-view', view: 'list' | 'form'): void
+  }>()
 
   onMounted(async () => {
     const students = await getStudents()

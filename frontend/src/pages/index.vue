@@ -8,6 +8,10 @@
     <NavigatorDrawer @change-view="currentView = $event">
       <StudentsList
         v-if="currentView === 'list'"
+        @change-view="currentView = $event"
+      />
+      <RegistrationStudent
+        v-if="currentView === 'form'"
       />
     </NavigatorDrawer>
 
