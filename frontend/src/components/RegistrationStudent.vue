@@ -46,7 +46,7 @@
           color="grey-lighten-3"
           size="large"
           variant="flat"
-          @click="clear"
+          @click="clearCancel"
         >
           Cancelar
         </v-btn>
@@ -62,23 +62,40 @@
           Salvar
         </v-btn>
       </div>
+      <v-snackbar
+        v-model="snackbar"
+        :color="snackbarColor"
+        location="top center"
+        multi-line
+      >
+        {{ snackbarMessage }}
+
+        <template #actions>
+          <v-btn
+            color="white"
+            variant="text"
+            @click="snackbar = false"
+          >
+            Fechar
+          </v-btn>
+        </template>
+      </v-snackbar>
     </form>
   </v-main>
 </template>
 
 
 <script setup lang="ts">
-  import { reactive, ref, watch } from 'vue'
+  import { reactive, ref } from 'vue'
   import { useVuelidate } from '@vuelidate/core'
   import { email, helpers, integer, minLength, required } from '@vuelidate/validators'
-  import type { Student } from '@/types/student'
+  import type { ResponseStudentCreated, Student } from '@/types/student'
+  import { createStudent } from '@/services/studentService'
 
   const loading = ref(false)
-
-  watch(loading, val => {
-    if (!val) return
-    setTimeout(() => (loading.value = false), 2000)
-  })
+  const snackbar = ref(false)
+  const snackbarMessage = ref('')
+  const snackbarColor = ref('success')
 
   const initialState: Student = {
     name: '',
@@ -123,6 +140,14 @@
     for (const [key, value] of Object.entries(initialState)) {
       state[key as keyof typeof state] = value
     }
+  }
+
+  const clearCancel = () => {
+    v$.value.$reset()
+
+    for (const [key, value] of Object.entries(initialState)) {
+      state[key as keyof typeof state] = value
+    }
 
     emit('change-view', 'list')
   }
@@ -133,7 +158,20 @@
     if (!isValid) return
 
     loading.value = true
-    console.log('Dados enviados:', state)
+
+    try {
+      const studentCreated: ResponseStudentCreated = await createStudent(state)
+      snackbarMessage.value = studentCreated.message
+      snackbar.value = true
+      clear()
+    } catch (error: any) {
+      snackbarMessage.value =
+        error?.response?.data?.message || 'Erro ao cadastrar aluno'
+      snackbarColor.value = '#E53935'
+      snackbar.value = true
+    } finally {
+      loading.value = false
+    }
   }
 </script>
 
