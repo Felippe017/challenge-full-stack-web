@@ -12,6 +12,7 @@
       />
       <RegistrationStudent
         v-if="currentView === 'form'"
+        @change-view="currentView = $event"
       />
     </NavigatorDrawer>
 

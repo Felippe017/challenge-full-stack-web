@@ -1,3 +1,4 @@
+import type { Student } from '@/types/student'
 import axios from 'axios'
 
 const api = axios.create({
@@ -9,12 +10,13 @@ export const getStudents = async () => {
   return response.data
 }
 
-export const createStudent = async (student: {
-  name: string
-  cpf: string
-  registration: string
-  email: string
-}) => {
-  const response = await api.post('/students', student)
+export const createStudent = async (student: Student) => {
+  const bodyRequest = {
+    name: student.name,
+    cpf: student.cpf.replace(/\D/g, ''),
+    registration: Number(student.registration),
+    email: student.email,
+  }
+  const response = await api.post('/students', bodyRequest)
   return response.data
 }

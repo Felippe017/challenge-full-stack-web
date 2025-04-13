@@ -1,5 +1,5 @@
 <template>
-  <v-main height="45rem">
+  <v-main height="40rem">
     <h1 class="text-h4">Consulta de alunos</h1>
     <div class="button-and-input">
       <v-text-field
