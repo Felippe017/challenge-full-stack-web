@@ -11,6 +11,12 @@ export const getStudents = async () => {
 }
 
 export const createStudent = async (student: Student) => {
-  const response = await api.post('/students', student)
+  const bodyRequest = {
+    name: student.name,
+    cpf: student.cpf.replace(/\D/g, ''),
+    registration: Number(student.registration),
+    email: student.email,
+  }
+  const response = await api.post('/students', bodyRequest)
   return response.data
 }
