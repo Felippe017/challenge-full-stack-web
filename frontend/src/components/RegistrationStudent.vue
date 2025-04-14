@@ -184,9 +184,11 @@
       snackbarMessage.value = studentCreated.message
       snackbar.value = true
       clear()
-    } catch (error: any) {
-      snackbarMessage.value =
-        error?.response?.data?.message || 'Erro ao cadastrar aluno'
+    } catch (error) {
+      if (error instanceof Error) {
+        snackbarMessage.value =
+          error?.message || 'Erro ao cadastrar aluno'
+      }
       snackbarColor.value = '#E53935'
       snackbar.value = true
     } finally {
@@ -211,9 +213,11 @@
       snackbarMessage.value = studentCreated.message
       snackbar.value = true
       emit('change-view', 'list')
-    } catch (error: any) {
-      snackbarMessage.value =
-        error?.response?.data?.message || 'Erro ao atualizar dados do aluno'
+    } catch (error) {
+      if (error instanceof Error) {
+        snackbarMessage.value =
+          error?.message || 'Erro ao atualizar dados do aluno'
+      }
       snackbarColor.value = '#E53935'
       snackbar.value = true
     } finally {
