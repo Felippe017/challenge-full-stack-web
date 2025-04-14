@@ -127,6 +127,7 @@
 
   const emit = defineEmits<{
     (e: 'change-view', view: 'list' | 'form'): void
+    (e: 'edit-student', student: Student): void
   }>()
 
   onMounted(async () => {
@@ -135,7 +136,8 @@
   })
 
   const editStudent = (student: Student) => {
-    console.log('Editar:', student)
+    emit('change-view', 'form')
+    emit('edit-student', student)
   }
 
   const deleteStudent = async (studentId: number) => {
