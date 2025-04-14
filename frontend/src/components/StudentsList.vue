@@ -53,13 +53,59 @@
               color="error"
               size="x-small"
               variant="outlined"
-              @click="deleteStudent(item)"
+              @click="dialog = true"
             >
               Excluir
             </v-btn>
+            <div class="text-center pa-4">
+              <v-dialog
+                v-model="dialog"
+                max-width="400"
+                persistent
+              >
+                <v-card
+                  prepend-icon="mdi-information"
+                  text="Tem certeza que deseja excluir esse aluno?"
+                  title="Deseja excluir esse aluno?"
+                >
+                  <template #actions>
+                    <v-spacer />
+
+                    <v-btn @click="dialog = false">
+                      Cancelar
+                    </v-btn>
+
+                    <v-btn
+                      :loading="loading"
+                      @click="deleteStudent(item.id)"
+                    >
+                      Excluir
+                    </v-btn>
+                  </template>
+                </v-card>
+              </v-dialog>
+            </div>
           </td>
         </tr>
       </tbody>
+      <v-snackbar
+        v-model="snackbar"
+        :color="snackbarColor"
+        location="top center"
+        multi-line
+      >
+        {{ snackbarMessage }}
+
+        <template #actions>
+          <v-btn
+            color="white"
+            variant="text"
+            @click="snackbar = false"
+          >
+            Fechar
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-table>
   </v-main>
 </template>
@@ -67,10 +113,17 @@
 
 <script lang="ts" setup>
   import { onMounted, ref } from 'vue'
-  import { getStudents } from '@/services/studentService'
+  import { getStudents, removeStudent } from '@/services/studentService'
   import type { Student } from '@/types/student'
+  import { useRouter } from 'vue-router'
 
   const allStudents = ref<Student[]>()
+  const dialog = ref(false)
+  const loading = ref(false)
+  const snackbar = ref(false)
+  const snackbarMessage = ref('')
+  const snackbarColor = ref('success')
+  const router = useRouter()
 
   const emit = defineEmits<{
     (e: 'change-view', view: 'list' | 'form'): void
@@ -85,8 +138,21 @@
     console.log('Editar:', student)
   }
 
-  const deleteStudent = (student: Student) => {
-    console.log('Excluir:', student)
+  const deleteStudent = async (studentId: number) => {
+    loading.value = true
+    try {
+      await removeStudent(studentId)
+      snackbarMessage.value = 'Aluno excluído com sucesso'
+      snackbar.value = true
+      router.go(0)
+    } catch (error: any) {
+      snackbarMessage.value =
+        error?.response?.data?.message || 'Não foi possível excluir aluno'
+      snackbarColor.value = '#E53935'
+      snackbar.value = true
+    } finally {
+      dialog.value = false
+    }
   }
 
 </script>
