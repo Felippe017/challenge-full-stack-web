@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { checkCpfExist, checkRegistrationExist } from '../services/studentsService';
 
 export const createStudentsSchema = z.object({
   body: z.object({
@@ -14,21 +13,10 @@ export const createStudentsSchema = z.object({
       .int('Registration must be an integer')
       .refine(val => val.toString().length === 6, {
         message: 'Registration must be exactly 6 digits',
-      })
-      .refine(async (val) => {
-        await checkRegistrationExist(val)
-      }, {
-        message: 'Registration already exists',
       }),
     cpf: z
       .string({ required_error: 'CPF is required' })
       .min(11, 'CPF must be 11 characters')
-      .refine(async (val) => {
-        await checkCpfExist(val)
-      }, {
-        message: 'CPF already exists',
-      }),
-
   }),
 });
 
