@@ -1,4 +1,12 @@
 export type Student = {
+  id: number
+  name: string
+  cpf: string
+  registration: string
+  email: string
+}
+
+export type StudentForm = {
   name: string
   cpf: string
   registration: string
