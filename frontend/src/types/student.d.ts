@@ -25,3 +25,8 @@ export type ResponseStudentCreated = {
   message: string
   student: ResponseStudent
 }
+
+export type StudentUpdateBody = {
+  name: string
+  email: string
+}
