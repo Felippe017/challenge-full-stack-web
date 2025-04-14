@@ -33,8 +33,10 @@ Essa abordagem promove o isolamento de responsabilidades, facilita a manutençã
 
 ## 🚀 O que você melhoraria se tivesse mais tempo
 
-- **Implementar paginação e busca com debounce** na listagem de alunos.
+- **Implementar Tanstack query** para cache em requisição.
+- **Implementar pattern composition** para front-end.
 - **Autenticação e autorização**: proteger rotas com middleware e JWT.
+- **Implementar paginação e busca com debounce** na listagem de alunos.
 - **Componentização ainda maior**: separar componentes de formulário e tabelas para reaproveitamento e testes isolados.
 - **Melhoria na experiência de usuário (UX)**: adicionar loaders por item, animações e confirmações visuais mais elegantes.
 - **Testes automatizados** com ferramentas como Jest e Supertest (backend) e Cypress ou Vue Test Utils (frontend).

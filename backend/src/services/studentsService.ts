@@ -66,30 +66,6 @@ export const deleteStudent = async ({ studentId }: StudentParamsInput) => {
 	return studentDeleted
 };
 
-export async function checkRegistrationExist(registration: number) {
-	const registrationExists = await prisma.students.findUnique({
-	  where: { registration },
-	})
-
-	if (registrationExists) {
-	  return false
-	}
-
-	return true
-}
-
-export async function checkCpfExist(cpf: string) {
-	const cpfExists = await prisma.students.findUnique({
-		where: { cpf },
-	})
-
-	if (cpfExists) {
-	  return false
-	}
-
-	return true
-}
-
 export const getStudentById = async ({ studentId }: StudentParamsInput) => {
 	const student = await prisma.students.findUnique({
 		where: { id: Number(studentId) },
