@@ -89,7 +89,7 @@
   import { reactive, ref } from 'vue'
   import { useVuelidate } from '@vuelidate/core'
   import { email, helpers, integer, minLength, required } from '@vuelidate/validators'
-  import type { ResponseStudentCreated, Student } from '@/types/student'
+  import type { ResponseStudentCreated, StudentForm } from '@/types/student'
   import { createStudent } from '@/services/studentService'
 
   const loading = ref(false)
@@ -97,7 +97,7 @@
   const snackbarMessage = ref('')
   const snackbarColor = ref('success')
 
-  const initialState: Student = {
+  const initialState: StudentForm = {
     name: '',
     email: '',
     registration: '',
