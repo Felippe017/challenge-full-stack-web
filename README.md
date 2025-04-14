@@ -1,34 +1,22 @@
-+A Educação - Full Stack Web Developer
+Desafio técnico Full Stack Web Developer - +A Educação
 ===================
 
-[![N|Solid](https://maisaedu.com.br/hubfs/site-grupo-a/logo-mais-a-educacao.svg)](https://maisaedu.com.br/) 
+# Contexto
+O objetivo deste projeto é arquitetar e desenvolver uma aplicação Full Stack Web que realize a Matrícula do Aluno na Turma de Programação Web da instituição Edtech.
 
-O objetivo deste desafio é avaliar as competências técnicas dos candidatos a desenvolvedor Full Stack Web na Maior Plataforma de Educação do Brasil.
+# Tecnologias usadas
 
-Será solicitado o desenvolvimento de uma Aplicação que realize a Matrícula do Aluno na Turma de Programação Web da instituição Edtech. Regras e requisitos técnicos estão detalhadas neste documento.
+Front-End
+> Desenvolvido usando: Vue, Vuetify, Axios, Typescript
 
-# Especificações Técnicas
-- **Front-end:**
-  - Framework JS: [Vue.js](https://vuejs.org/)
-  - Framework de UI: [Vuetify](https://vuetifyjs.com/)
-- **API:** NodeJS
-- **Banco de Dados:** Postgress ou MySQL
-- **Idioma de escrita do código:** Inglês
+Back-End
+> Desenvolvido usando: NodeJS, ExpressJS, PostegreSQL, Typescript, Zod, Prisma, Docker
 
-# Requisitos
-## Contextualização
-Considere que uma Instituição de Ensino Superior precisa de uma solução para cadastrar e gerenciar matrículas de alunos em turmas online. Para realizar a matrícula, é necessário que o cadastro do aluno tenha sido realizado.
+## Executando aplicação
+Para rodar a aplicação, basta rodar: 
+  > sudo docker-compose up -d
 
-O desafio consiste em criar uma aplicação para o cadastro de alunos conforme os critérios de aceitação.
 
-## Mockups de interface
-A seguir, são apresentados alguns mockups de interface como um guia para a criação do front-end. Fique à vontade para usar sua criatividade na criação do front-end.
-
-* Listagem de Alunos
-![Listagem de Alunos](/mockups/studants_list.png)
-
-* Criar/Editar Aluno
-![Listagem de Alunos](/mockups/studants_save.png)
 
 ## Histórias do Usuário
 - **Sendo** um usuário administrativo da Instituição
@@ -90,38 +78,3 @@ A seguir, são apresentados alguns mockups de interface como um guia para a cria
 - **Dado** que estou na modal de confirmação de exclusão
 - **Quando** clico em Cancelar
 - **Então** então fecha a modal e não persiste a exclusão
-
-## Campos obrigatórios:
-- **Nome** (editável)
-- **Email** (editável)
-- **RA** (não editável) (chave única)
-- **CPF** (não editável)
-
-# Critérios de avaliação
-- Qualidade de escrita do código
-- Organização do projeto
-- Qualidade da API
-- Lógica da solução implementada
-- Qualidade da camada de persistência
-- Utilização do Git (quantidade e descrição dos commits, Git Flow, ...)
-- Validações
-- Tratamento de erros
-- Padrões de projeto e arquitetura
-
-# Desejável
-- Testes de unidade
-- Documentação da arquitetura de solução
-
-# Diferenciais
-- Segurança da aplicação (autenticação, autorização, ...)
-
-# Instruções de entrega
-1. Crie um fork do repositório no seu GitHub
-2. Faça o push do código desenvolvido no seu Github
-3. Inclua um arquivo chamado COMMENTS.md explicando
-    - Decisão da arquitetura utilizada
-    - Lista de bibliotecas de terceiros utilizadas
-    - O que você melhoraria se tivesse mais tempo
-    - Quais requisitos obrigatórios que não foram entregues
-4. Informe ao recrutador quando concluir o desafio junto com o link do repositório
-5. Após revisão do projeto junto com a equipe de desevolvimento deixe seu repositório privado
