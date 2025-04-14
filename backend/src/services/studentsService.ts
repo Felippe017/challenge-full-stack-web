@@ -28,6 +28,12 @@ export const updateStudent = async ({body, params}: UpdateStudentInput) => {
 		where: { id: Number(studentId) },
 	})
 
+	if (!student) {
+		const error = new Error('Aluno não foi encontrado') as Error & { status: number }
+		error.status = 404
+		throw error
+	}
+
 	const updatedStudent = await prisma.students.update({
 		where: { 
 			registration: student?.registration,
@@ -44,6 +50,12 @@ export const deleteStudent = async ({ studentId }: StudentParamsInput) => {
 		where: { id: Number(studentId) },
 	})
 
+	if (!student) {
+		const error = new Error('Aluno não foi encontrado') as Error & { status: number }
+		error.status = 404
+		throw error
+	}
+
 	const studentDeleted = await prisma.students.delete({
 		where: { 
 			registration: student?.registration,
@@ -54,9 +66,40 @@ export const deleteStudent = async ({ studentId }: StudentParamsInput) => {
 	return studentDeleted
 };
 
+export async function checkRegistrationExist(registration: number) {
+	const registrationExists = await prisma.students.findUnique({
+	  where: { registration },
+	})
+
+	if (registrationExists) {
+	  return false
+	}
+
+	return true
+}
+
+export async function checkCpfExist(cpf: string) {
+	const cpfExists = await prisma.students.findUnique({
+		where: { cpf },
+	})
+
+	if (cpfExists) {
+	  return false
+	}
+
+	return true
+}
+
 export const getStudentById = async ({ studentId }: StudentParamsInput) => {
 	const student = await prisma.students.findUnique({
 		where: { id: Number(studentId) },
 	})
+
+	if (!student) {
+		const error = new Error('Aluno não foi encontrado') as Error & { status: number }
+		error.status = 404
+		throw error
+	}
+
 	return student
 }

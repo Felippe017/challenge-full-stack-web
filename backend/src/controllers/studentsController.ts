@@ -43,9 +43,11 @@ export async function updateStudentHandler(
       params: { studentId }
   });
     res.status(200).json({ "message": "Aluno editado com sucesso.", student });
-  } catch (e: any) {
-    console.error(e.message);
-    res.status(400).send(e.message);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+      res.status(400).send(error.message);
+    }
   }
 }
 
@@ -57,9 +59,12 @@ export async function deleteStudentHandler(
     const { studentId } = req.params
     await deleteStudent({ studentId });
     res.status(204).json({ "message": "Aluno deletado com sucesso" });
-  } catch (e: any) {
-    console.error(e.message);
-    res.status(400).send(e.message);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+      res.status(400).send(error.message);
+    }
+    
   }
 }
 
@@ -71,8 +76,10 @@ export async function getStudentByIdHandler(
     const { studentId } = req.params
     const student = await getStudentById({ studentId });
     res.status(200).json({"message": "Dados do aluno recuperados com sucesso.", student});
-  } catch (e: any) {
-    console.error(e.message);
-    res.status(400).send(e.message);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+      res.status(400).send(error.message);
+    }
   }
 }
