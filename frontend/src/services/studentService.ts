@@ -1,4 +1,4 @@
-import type { StudentForm } from '@/types/student'
+import type { StudentForm, StudentUpdateBody } from '@/types/student'
 import axios from 'axios'
 
 const api = axios.create({
@@ -23,5 +23,14 @@ export const createStudent = async (student: StudentForm) => {
 
 export const removeStudent = async (studentId: number) => {
   const response = await api.delete(`/students/${studentId}`)
+  return response.data
+}
+
+export const updateStudent = async (studentId: number, student: StudentUpdateBody) => {
+  const bodyRequest = {
+    name: student.name,
+    email: student.email,
+  }
+  const response = await api.patch(`/students/${studentId}`, bodyRequest)
   return response.data
 }

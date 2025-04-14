@@ -9,9 +9,11 @@
       <StudentsList
         v-if="currentView === 'list'"
         @change-view="currentView = $event"
+        @edit-student="selectedStudent = $event"
       />
       <RegistrationStudent
         v-if="currentView === 'form'"
+        :student-to-edit="selectedStudent"
         @change-view="currentView = $event"
       />
     </NavigatorDrawer>
@@ -20,8 +22,10 @@
 </template>
 
 <script lang="ts" setup>
+  import type { Student } from '@/types/student';
   import { ref } from 'vue'
   const currentView = ref<'list' | 'form'>('list')
+  const selectedStudent = ref<Student | null>(null)
 </script>
 
 <style lang="sass">

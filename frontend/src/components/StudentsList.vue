@@ -127,6 +127,7 @@
 
   const emit = defineEmits<{
     (e: 'change-view', view: 'list' | 'form'): void
+    (e: 'edit-student', student: Student): void
   }>()
 
   onMounted(async () => {
@@ -135,7 +136,8 @@
   })
 
   const editStudent = (student: Student) => {
-    console.log('Editar:', student)
+    emit('change-view', 'form')
+    emit('edit-student', student)
   }
 
   const deleteStudent = async (studentId: number) => {
@@ -145,9 +147,11 @@
       snackbarMessage.value = 'Aluno excluído com sucesso'
       snackbar.value = true
       router.go(0)
-    } catch (error: any) {
-      snackbarMessage.value =
-        error?.response?.data?.message || 'Não foi possível excluir aluno'
+    } catch (error) {
+      if (error instanceof Error) {
+        snackbarMessage.value =
+          error?.message || 'Não foi possível excluir aluno'
+      }
       snackbarColor.value = '#E53935'
       snackbar.value = true
     } finally {

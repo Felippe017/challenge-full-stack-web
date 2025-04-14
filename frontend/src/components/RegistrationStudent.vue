@@ -26,6 +26,7 @@
         v-mask="['######']"
         :error-messages="v$.registration.$errors.map(e => e.$message as string)"
         label="RA"
+        :readonly="!!studentToEdit"
         required
         @blur="v$.registration.$touch"
         @input="v$.registration.$touch"
@@ -36,6 +37,7 @@
         v-mask="['###.###.###-##']"
         :error-messages="v$.cpf.$errors.map(e => e.$message as string)"
         label="CPF"
+        :readonly="!!studentToEdit"
         required
         @blur="v$.cpf.$touch"
         @input="v$.cpf.$touch"
@@ -89,8 +91,13 @@
   import { reactive, ref } from 'vue'
   import { useVuelidate } from '@vuelidate/core'
   import { email, helpers, integer, minLength, required } from '@vuelidate/validators'
-  import type { ResponseStudentCreated, StudentForm } from '@/types/student'
-  import { createStudent } from '@/services/studentService'
+  import type { ResponseStudentCreated, Student, StudentForm } from '@/types/student'
+  import { createStudent, updateStudent } from '@/services/studentService'
+
+  const props = defineProps<{
+    studentToEdit: Student | null
+  }>()
+
 
   const loading = ref(false)
   const snackbar = ref(false)
@@ -107,6 +114,19 @@
   const state = reactive({
     ...initialState,
   })
+
+  watch(
+    () => props.studentToEdit,
+    student => {
+      if (student) {
+        state.name = student.name
+        state.cpf = student.cpf
+        state.registration = student.registration
+        state.email = student.email
+      }
+    },
+    { immediate: true }
+  )
 
   const rules = {
     name: {
@@ -152,7 +172,7 @@
     emit('change-view', 'list')
   }
 
-  const submit = async () => {
+  const registrationStudent = async () => {
     const isValid = await v$.value.$validate()
 
     if (!isValid) return
@@ -164,13 +184,52 @@
       snackbarMessage.value = studentCreated.message
       snackbar.value = true
       clear()
-    } catch (error: any) {
-      snackbarMessage.value =
-        error?.response?.data?.message || 'Erro ao cadastrar aluno'
+    } catch (error) {
+      if (error instanceof Error) {
+        snackbarMessage.value =
+          error?.message || 'Erro ao cadastrar aluno'
+      }
       snackbarColor.value = '#E53935'
       snackbar.value = true
     } finally {
       loading.value = false
+    }
+  }
+
+  const editStudent = async () => {
+    const isValid = await v$.value.$validate()
+
+    if (!isValid) return
+
+    if (!props.studentToEdit) return
+
+    loading.value = true
+
+    try {
+      const studentCreated: ResponseStudentCreated = await updateStudent(
+        props.studentToEdit.id,
+        state
+      )
+      snackbarMessage.value = studentCreated.message
+      snackbar.value = true
+      emit('change-view', 'list')
+    } catch (error) {
+      if (error instanceof Error) {
+        snackbarMessage.value =
+          error?.message || 'Erro ao atualizar dados do aluno'
+      }
+      snackbarColor.value = '#E53935'
+      snackbar.value = true
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const submit = async () => {
+    if (props.studentToEdit) {
+      await editStudent()
+    } else {
+      await registrationStudent()
     }
   }
 </script>
